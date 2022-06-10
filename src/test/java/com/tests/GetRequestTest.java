@@ -6,7 +6,7 @@ import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 import static io.restassured.RestAssured.*;
 
-public class GetRequest{
+public class GetRequestTest {
 	@Test
 	public void getEmployees(){
 		Response response = given().get("http://localhost:3000/employees");

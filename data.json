@@ -1,6 +1,22 @@
 {
-  "id": "678",
+  "id": 678,
   "firstName": "Tom",
   "lastName": "Cruise",
-  "email": "user1@test.co.in"
+  "email": "user1@test.co.in",
+  "jobs" : ["tester","Son","Husband"],
+  "favFoods" : {
+    "breakFast" : "Pohe",
+    "lunch" : ["Chapatis","Curry"],
+    "dinner" : ["Rice","Milk"]
+  },
+  "marks": [
+    {
+      "Maths": 95,
+      "English": 89
+    },
+    {
+      "Maths": 95,
+      "English": 89
+    }
+  ]
 }
