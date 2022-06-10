@@ -12,8 +12,8 @@ import java.util.List;
 public class Employee {
 
 	private int id;
-	private String firstname;
-	private String lastname;
+	private String firstName;
+	private String lastName;
 	private String email;
 	private FavFood favFood;
 	private List<Marks> marks;
