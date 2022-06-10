@@ -6,28 +6,32 @@ import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.given;
 
 public class PostRequestTest {
 
 	@Test
-	public void postUsingString(){
+	public void createEmployeeUsingString() {
 		//Using simple string
 		//
-	  String reqBody="{\n" +
-			  "        \"id\": \"158\",\n" +
-			  "        \"firstName\": \"Tom\",\n" +
-			  "        \"lastName\": \"Cruise\",\n" +
-			  "        \"email\": \"user1@test.co.in\"\n" +
-			  "    }";
+		String reqBody = "{\n" +
+				"        \"id\": \"158\",\n" +
+				"        \"firstName\": \"Tom\",\n" +
+				"        \"lastName\": \"Cruise\",\n" +
+				"        \"email\": \"user1@test.co.in\"\n" +
+				"    }";
 
 		String updatedReqBody = reqBody.replace("158", String.valueOf(new Faker().number().numberBetween(100, 900)));
 		Response response = given()
@@ -39,10 +43,12 @@ public class PostRequestTest {
 
 		response.prettyPrint();
 		System.out.println(response.statusCode());
+
+		Assert.assertEquals(response.statusCode(), HttpStatus.SC_CREATED);
 	}
 
 	@Test
-	public void postUsingFile(){
+	public void createEmployeeUsingFile() {
 
 		//Pass it from external File
 
@@ -55,18 +61,20 @@ public class PostRequestTest {
 
 		response.prettyPrint();
 		System.out.println(response.statusCode());
+
+		Assert.assertEquals(response.statusCode(), HttpStatus.SC_CREATED);
 	}
 
 	@Test
-	public void postUsingFileAsString() throws IOException {
+	public void createEmployeeUsingFileAsString() throws IOException {
 
 		//Store FIle data as string
 
-		byte[] bytes = Files.readAllBytes(Paths.get(System.getProperty("user.dir")+"/data.json"));
+		byte[] bytes = Files.readAllBytes(Paths.get(System.getProperty("user.dir") + "/data.json"));
 
-		String reqBody=new String(bytes);
-			reqBody=reqBody.replace("678",String.valueOf(new Faker().number().numberBetween(100,500)))
-					.replace("Tom",new Faker().name().firstName());
+		String reqBody = new String(bytes);
+		reqBody = reqBody.replace("678", String.valueOf(new Faker().number().numberBetween(100, 500)))
+				.replace("Tom", new Faker().name().firstName());
 
 		Response response = given()
 				.contentType(ContentType.JSON)
@@ -78,41 +86,42 @@ public class PostRequestTest {
 		response.prettyPrint();
 		System.out.println(response.statusCode());
 
+		Assert.assertEquals(response.statusCode(), HttpStatus.SC_CREATED);
 	}
 
 	@Test
-	public void postUsingCollections(){
+	public void createEmployeeUsingCollections() {
 
 		// {} - > MAP
 		// [] -> List
 
-		Map<String,Object> reqBody=new LinkedHashMap<>();
+		Map<String, Object> reqBody = new LinkedHashMap<>();
 
-		reqBody.put("id",new Faker().number().numberBetween(100,999));
-		reqBody.put("firstName",new Faker().name().firstName());
-		reqBody.put("lastName",new Faker().name().firstName());
-		reqBody.put("email",new Faker().internet().emailAddress());
+		reqBody.put("id", new Faker().number().numberBetween(100, 999));
+		reqBody.put("firstName", new Faker().name().firstName());
+		reqBody.put("lastName", new Faker().name().firstName());
+		reqBody.put("email", new Faker().internet().emailAddress());
 
-		List<String> job=new ArrayList<>();
+		List<String> job = new ArrayList<>();
 		job.add("tester");
 		job.add("son");
 
-		reqBody.put("jobs",job);
+		reqBody.put("jobs", job);
 
-		Map<String,Object> favFood=new LinkedHashMap<>();
-		favFood.put("breakFast" , "Pohe");
+		Map<String, Object> favFood = new LinkedHashMap<>();
+		favFood.put("breakFast", "Pohe");
 
-		List<String> lunch=new ArrayList<>();
+		List<String> lunch = new ArrayList<>();
 		lunch.add("Chapatis");
 		lunch.add("Curry");
 
-		List<String> dinner=new ArrayList<>();
+		List<String> dinner = new ArrayList<>();
 		dinner.add("Rice");
 		dinner.add("Milk");
 
-		reqBody.put("favFoods" ,favFood);
-		reqBody.put("lunch",lunch);
-		reqBody.put("dinner",dinner);
+		reqBody.put("favFoods", favFood);
+		reqBody.put("lunch", lunch);
+		reqBody.put("dinner", dinner);
 
 
 		Response response = given().contentType(ContentType.JSON)
@@ -126,40 +135,42 @@ public class PostRequestTest {
 		response.then().statusCode(HttpStatus.SC_CREATED);
 		System.out.println(response.statusCode());
 
+		Assert.assertEquals(response.statusCode(), HttpStatus.SC_CREATED);
+
 	}
 
 	@Test
-	public void postUsingJson(){
+	public void createEmployeeUsingJson() {
 		//{} --> JsonObject
 		//[] --> JsonArray
 
-		JSONObject reqBody=new JSONObject();
-		reqBody.put("id",new Faker().number().numberBetween(100,999));
-		reqBody.put("firstName",new Faker().name().firstName());
-		reqBody.put("lastName",new Faker().name().firstName());
-		reqBody.put("email",new Faker().internet().emailAddress());
-		reqBody.accumulate("email","text@test.in");
+		JSONObject reqBody = new JSONObject();
+		reqBody.put("id", new Faker().number().numberBetween(100, 999));
+		reqBody.put("firstName", new Faker().name().firstName());
+		reqBody.put("lastName", new Faker().name().firstName());
+		reqBody.put("email", new Faker().internet().emailAddress());
+		reqBody.accumulate("email", "text@test.in");
 
-		JSONArray job=new JSONArray();
+		JSONArray job = new JSONArray();
 		job.put("tester");
 		job.put("son");
 
-		reqBody.put("jobs",job);
+		reqBody.put("jobs", job);
 
-		JSONObject favFood=new JSONObject();
-		favFood.put("breakFast" , "Pohe");
+		JSONObject favFood = new JSONObject();
+		favFood.put("breakFast", "Pohe");
 
-		JSONArray lunch=new JSONArray();
+		JSONArray lunch = new JSONArray();
 		lunch.put("Chapatis");
 		lunch.put("Curry");
 
-		JSONArray dinner=new JSONArray();
+		JSONArray dinner = new JSONArray();
 		dinner.put("Rice");
 		dinner.put("Milk");
 
-		reqBody.put("favFoods" ,favFood);
-		reqBody.put("lunch",lunch);
-		reqBody.put("dinner",dinner);
+		reqBody.put("favFoods", favFood);
+		reqBody.put("lunch", lunch);
+		reqBody.put("dinner", dinner);
 
 
 		Response response = given()
@@ -173,6 +184,8 @@ public class PostRequestTest {
 
 		response.then().statusCode(HttpStatus.SC_CREATED);
 		System.out.println(response.statusCode());
+
+		Assert.assertEquals(response.statusCode(), HttpStatus.SC_CREATED);
 
 	}
 }
