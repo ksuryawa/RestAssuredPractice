@@ -9,13 +9,18 @@ import java.util.List;
 @Setter
 @Getter
 @AllArgsConstructor
+
 public class Employee {
 
 	private int id;
 	private String firstName;
 	private String lastName;
 	private String email;
-	private FavFood favFood;
+	private FavFoods favFoods;
 	private List<Marks> marks;
+	private List<String> jobs;
+
+	public Employee() {
+	}
 
 }

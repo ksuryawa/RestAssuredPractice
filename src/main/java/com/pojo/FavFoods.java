@@ -9,10 +9,13 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class FavFood {
+public class FavFoods {
 
 	private String breakFast;
 	private List<String> lunch;
 	private List<String> dinner;
 
+	public FavFoods() {
+		// TODO document why this constructor is empty
+	}
 }
