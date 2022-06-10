@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "favFoods": {
+      "type": "object",
+      "properties": {
+        "breakFast": {
+          "type": "string"
+        },
+        "lunch": {
+          "type": "array",
+          "items": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "dinner": {
+          "type": "array",
+          "items": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "required": [
+        "breakFast",
+        "lunch",
+        "dinner"
+      ]
+    },
+    "marks": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "math": {
+              "type": "integer"
+            },
+            "english": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "math",
+            "english"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "math": {
+              "type": "integer"
+            },
+            "english": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "math",
+            "english"
+          ]
+        }
+      ]
+    },
+    "jobs": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "firstName",
+    "lastName",
+    "email",
+    "favFoods",
+    "marks",
+    "jobs"
+  ]
+}
