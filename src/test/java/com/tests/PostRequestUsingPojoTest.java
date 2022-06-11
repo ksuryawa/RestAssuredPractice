@@ -11,6 +11,7 @@ import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 import static io.restassured.RestAssured.given;
@@ -22,7 +23,7 @@ public class PostRequestUsingPojoTest {
 	//[] --> List<T>
 
 	@Test
-	public void createEmployeeUsingPojo() {
+	public void createEmployeeUsingPojo() throws IOException {
 
 		Faker faker = new Faker();
 

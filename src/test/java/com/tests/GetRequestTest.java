@@ -5,12 +5,16 @@ import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GetRequestTest {
 	@Test
-	public void getEmployees() {
+	public void getEmployees() throws IOException {
 		Response response = given().get("http://localhost:3000/employees");
 
 		System.out.println(response.statusCode());
@@ -25,6 +29,8 @@ public class GetRequestTest {
 
 		response.prettyPrint();
 		assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+
+		Files.write(Paths.get(System.getProperty("user.dir") + "/response.json"), response.asByteArray());
 	}
 
 	@Test
