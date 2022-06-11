@@ -6,6 +6,7 @@ import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class GetRequestTest {
 	@Test
@@ -23,6 +24,7 @@ public class GetRequestTest {
 		}
 
 		response.prettyPrint();
+		assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
 	}
 
 	@Test
@@ -35,6 +37,8 @@ public class GetRequestTest {
 
 		response.prettyPrint();
 		System.out.println(response.statusCode());
+		assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+		assertThat(response.time()).isLessThan(1000);
 
 	}
 }

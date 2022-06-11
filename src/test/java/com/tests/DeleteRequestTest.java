@@ -2,7 +2,7 @@ package com.tests;
 
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
-import org.testng.Assert;
+import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
@@ -19,8 +19,8 @@ public class DeleteRequestTest {
 				.delete("http://localhost:3000/employees/{id}");
 
 		System.out.println(response.statusCode());
-		
-		Assert.assertEquals(response.statusCode(), HttpStatus.SC_OK);
+
+		Assertions.assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
 
 	}
 }

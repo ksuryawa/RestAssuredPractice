@@ -8,13 +8,13 @@ import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.util.Arrays;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PostRequestUsingPojoTest {
 
@@ -47,8 +47,6 @@ public class PostRequestUsingPojoTest {
 		response.then().statusCode(HttpStatus.SC_CREATED);
 		System.out.println(response.statusCode());
 
-		Assert.assertEquals(response.statusCode(), HttpStatus.SC_CREATED);
-
 		System.out.println(response.jsonPath().getString("firstName"));
 		String string = response.jsonPath().getString("favFoods.lunch[0]");
 		System.out.println(string);
@@ -59,6 +57,12 @@ public class PostRequestUsingPojoTest {
 		response.then().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("employeeSchema.json")); //using classpath
 
 		response.then().body(JsonSchemaValidator.matchesJsonSchema(new File(System.getProperty("user.dir") + "/src/test/resources/jsonschemas/schema.json")));
+
+		assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_CREATED);
+		assertThat(response.jsonPath().getString("firstName")).isEqualTo(employee.getFirstName());
+		assertThat(response.jsonPath().getString("lastName")).isEqualTo(employee.getLastName());
+		assertThat(response.jsonPath().getString("email")).isEqualTo(employee.getEmail());
+
 
 	}
 }

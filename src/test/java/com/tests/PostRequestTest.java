@@ -6,7 +6,6 @@ import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -19,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PostRequestTest {
 
@@ -44,7 +44,10 @@ public class PostRequestTest {
 		response.prettyPrint();
 		System.out.println(response.statusCode());
 
-		Assert.assertEquals(response.statusCode(), HttpStatus.SC_CREATED);
+		assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_CREATED);
+		assertThat(response.jsonPath().getString("firstName")).isEqualTo("Tom");
+		assertThat(response.jsonPath().getString("lastName")).isEqualTo("Cruise");
+		assertThat(response.jsonPath().getString("email")).isEqualTo("user1@test.co.in");
 	}
 
 	@Test
@@ -62,7 +65,9 @@ public class PostRequestTest {
 		response.prettyPrint();
 		System.out.println(response.statusCode());
 
-		Assert.assertEquals(response.statusCode(), HttpStatus.SC_CREATED);
+		assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_CREATED);
+		assertThat(response.jsonPath().getString("firstName")).isEqualTo("Tom");
+		assertThat(response.jsonPath().getString("lastName")).isEqualTo("Cruise");
 	}
 
 	@Test
@@ -86,7 +91,8 @@ public class PostRequestTest {
 		response.prettyPrint();
 		System.out.println(response.statusCode());
 
-		Assert.assertEquals(response.statusCode(), HttpStatus.SC_CREATED);
+		assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_CREATED);
+
 	}
 
 	@Test
@@ -135,7 +141,7 @@ public class PostRequestTest {
 		response.then().statusCode(HttpStatus.SC_CREATED);
 		System.out.println(response.statusCode());
 
-		Assert.assertEquals(response.statusCode(), HttpStatus.SC_CREATED);
+		assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_CREATED);
 
 	}
 
@@ -185,7 +191,7 @@ public class PostRequestTest {
 		response.then().statusCode(HttpStatus.SC_CREATED);
 		System.out.println(response.statusCode());
 
-		Assert.assertEquals(response.statusCode(), HttpStatus.SC_CREATED);
+		assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_CREATED);
 
 	}
 }
